@@ -4,13 +4,17 @@ options {
 	tokenVocab = ExpressionLexer;
 	language = Java;
 }
-@members {
-    private int __value;
-}
 
-expression:
-	| expression operation expression
-	| OPEN_BRACKET expression CLOSE_BRACKET
-	| INT;
+prog: stat+;
 
-operation: PLUS | MINUS;
+stat:
+	expr NEWLINE			# printExpr
+	| ID EQUAL expr NEWLINE	# assign
+	| NEWLINE				# blank;
+
+expr:
+	expr op = (MUL | DIV) expr			# MulDiv
+	| expr op = (ADD | SUB) expr		# AddSub
+	| INT								# int
+	| ID								# id
+	| OPEN_BRACKET expr CLOSE_BRACKET	# parens;

@@ -1,10 +1,12 @@
 package org.machmeier.antlr;
 
-import org.antlr.v4.runtime.CommonToken;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.machmeier.antlr.math.ExpressionParser;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.machmeier.antlr.math.ExpressionParserBaseListener;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExpressionParserListener extends ExpressionParserBaseListener {
+
+    public static final ExpressionParserListener INSTANCE = new ExpressionParserListener();
 
 }
