@@ -26,7 +26,7 @@ public class ExpressionParserVisitor extends ExpressionParserBaseVisitor<Integer
     public Integer visitPrintExpr(final ExpressionParser.PrintExprContext ctx) {
         final Integer value = visit(ctx.expr());
         log.info("Value:" + value);
-        return 0;
+        return value;
     }
 
     @Override
