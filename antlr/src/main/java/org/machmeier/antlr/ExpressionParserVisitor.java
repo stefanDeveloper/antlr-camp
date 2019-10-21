@@ -2,12 +2,14 @@ package org.machmeier.antlr;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.machmeier.antlr.math.ExpressionParser;
 import org.machmeier.antlr.math.ExpressionParserBaseVisitor;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class ExpressionParserVisitor extends ExpressionParserBaseVisitor<Integer> {
 
     private Map<String, Integer> memory = new HashMap<String, Integer>();
@@ -23,7 +25,7 @@ public class ExpressionParserVisitor extends ExpressionParserBaseVisitor<Integer
     @Override
     public Integer visitPrintExpr(ExpressionParser.PrintExprContext ctx) {
         Integer value = visit(ctx.expr());
-        System.out.println(value);
+        log.info("Value:" + value);
         return 0;
     }
 
@@ -43,7 +45,9 @@ public class ExpressionParserVisitor extends ExpressionParserBaseVisitor<Integer
     public Integer visitMulDiv(ExpressionParser.MulDivContext ctx) {
         int left = visit(ctx.expr(0));
         int right = visit(ctx.expr(1));
-        if (ctx.op.getType() == ExpressionParser.MUL) return left * right;
+        if (ctx.op.getType() == ExpressionParser.MUL) {
+            return left * right;
+        }
         return left / right;
     }
 
@@ -51,7 +55,9 @@ public class ExpressionParserVisitor extends ExpressionParserBaseVisitor<Integer
     public Integer visitAddSub(ExpressionParser.AddSubContext ctx) {
         int left = visit(ctx.expr(0)); // get value of left subexpression
         int right = visit(ctx.expr(1)); // get value of right subexpression
-        if (ctx.op.getType() == ExpressionParser.ADD) return left + right;
+        if (ctx.op.getType() == ExpressionParser.ADD) {
+            return left + right;
+        }
         return left - right; // must be SUB
     }
 
